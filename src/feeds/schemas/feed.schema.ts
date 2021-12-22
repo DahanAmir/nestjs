@@ -3,16 +3,13 @@ import { Document } from 'mongoose';
 
 export type FeedDocument = Feed & Document;
 
-@Schema()
+@Schema({ timestamps: true })
 export class Feed {
   @Prop()
   name: string;
 
-  @Prop()
-  age: number;
-
-  @Prop()
-  breed: string;
+  @Prop({ default: 0 })
+  likes: number;
 }
 
 export const FeedSchema = SchemaFactory.createForClass(Feed);
