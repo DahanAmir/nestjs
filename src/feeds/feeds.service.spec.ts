@@ -3,27 +3,28 @@ import { FeedsService } from './feeds.service';
 import { getModelToken } from '@nestjs/mongoose';
 import { Feed } from './schemas/feed.schema';
 import { Model } from 'mongoose';
+import { CreateFeedDto } from './dto/create-feed.dto';
 
 const mockFeed = {
   name: 'Feed #1',
-  breed: 'Breed #1',
-  age: 4,
 };
 
 describe('FeedsService', () => {
   let service: FeedsService;
   let model: Model<Feed>;
 
-  const catsArray = [
+  const feedsArray = [
     {
       name: 'Feed #1',
-      breed: 'Breed #1',
-      age: 4,
+      likes: '1'
     },
     {
       name: 'Feed #2',
-      breed: 'Breed #2',
-      age: 2,
+      likes: '2'
+    },
+    {
+      name: 'Feed #3',
+      likes: '3'
     },
   ];
 
@@ -52,27 +53,25 @@ describe('FeedsService', () => {
     expect(service).toBeDefined();
   });
 
-  it('should return all cats', async () => {
+  it('should return all feeds', async () => {
     jest.spyOn(model, 'find').mockReturnValue({
-      exec: jest.fn().mockResolvedValueOnce(catsArray),
+      exec: jest.fn().mockResolvedValueOnce(feedsArray),
     } as any);
-    const cats = await service.findAll();
-    expect(cats).toEqual(catsArray);
+    const feeds = await service.findAll();
+    expect(feeds).toEqual(feedsArray);
   });
 
-  it('should insert a new cat', async () => {
+  it('should insert a new feed', async () => {
     jest.spyOn(model, 'create').mockImplementationOnce(() =>
       Promise.resolve({
-        name: 'Feed #1',
-        breed: 'Breed #1',
-        age: 4,
+        name: 'Feed #1'
       }),
     );
-    const newFeed = await service.create({
+    const createFeedDto: CreateFeedDto = {
       name: 'Feed #1',
-      breed: 'Breed #1',
-      age: 4,
-    });
+    };
+  
+    const newFeed = await service.create(createFeedDto);
     expect(newFeed).toEqual(mockFeed);
   });
 });

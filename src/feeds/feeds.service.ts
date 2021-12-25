@@ -19,10 +19,20 @@ export class FeedsService {
   async addLike(id: Types.ObjectId): Promise<Feed> {
     const updatedFeed = await this.feedModel.findByIdAndUpdate(id, {
       $inc: { likes: 1 },
+      
     });
 
     return updatedFeed;
   }
+
+  async unLike(id: Types.ObjectId): Promise<Feed> {
+    const updatedFeed = await this.feedModel.findByIdAndUpdate(id, {
+      $inc: { likes: -1 },
+    });
+    return updatedFeed;
+  }
+
+
 
   async findAll(): Promise<Feed[]> {
     return this.feedModel.find().exec();

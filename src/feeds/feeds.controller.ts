@@ -9,14 +9,14 @@ import { Types } from 'mongoose';
 export class FeedsController {
   constructor(private readonly feedsService: FeedsService) {}
 
-  @Post('')
+  @Post()
   async create(@Body() createFeedDto: CreateFeedDto): Promise<void> {
     await this.feedsService.create(createFeedDto);
   }
 
   @Post('/like/:id')
-  async like(@Param('id') id: Types.ObjectId): Promise<void> {
-    await this.feedsService.addLike(id);
+  async like(@Param('id') id: Types.ObjectId): Promise<Feed> {
+    return await this.feedsService.addLike(id);
   }
 
   @Get()

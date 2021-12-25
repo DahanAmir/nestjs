@@ -2,21 +2,20 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { FeedsController } from './feeds.controller';
 import { CreateFeedDto } from './dto/create-feed.dto';
 import { FeedsService } from './feeds.service';
+import { Types } from 'mongoose';
+import { Feed } from './schemas/feed.schema';
 
 describe('Feeds Controller', () => {
   let controller: FeedsController;
   let service: FeedsService;
   const createFeedDto: CreateFeedDto = {
     name: 'Feed #1',
-    breed: 'Breed #1',
-    age: 4,
   };
 
-  const mockFeed = {
+  const mockFeed: Feed = {
+    _id: new Types.ObjectId('61c3a8af26e3a0fbcb528820'),
     name: 'Feed #1',
-    breed: 'Breed #1',
-    age: 4,
-    _id: 'a id',
+    likes: 12,
   };
 
   beforeEach(async () => {
@@ -29,18 +28,12 @@ describe('Feeds Controller', () => {
             findAll: jest.fn().mockResolvedValue([
               {
                 name: 'Feed #1',
-                breed: 'Bread #1',
-                age: 4,
               },
               {
                 name: 'Feed #2',
-                breed: 'Breed #2',
-                age: 3,
               },
               {
                 name: 'Feed #3',
-                breed: 'Breed #3',
-                age: 2,
               },
             ]),
             create: jest.fn().mockResolvedValue(createFeedDto),
@@ -69,18 +62,12 @@ describe('Feeds Controller', () => {
       expect(controller.findAll()).resolves.toEqual([
         {
           name: 'Feed #1',
-          breed: 'Bread #1',
-          age: 4,
         },
         {
           name: 'Feed #2',
-          breed: 'Breed #2',
-          age: 3,
         },
         {
           name: 'Feed #3',
-          breed: 'Breed #3',
-          age: 2,
         },
       ]);
       expect(service.findAll).toHaveBeenCalled();

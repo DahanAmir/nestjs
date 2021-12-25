@@ -1,10 +1,12 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import { Document, Types } from 'mongoose';
 
 export type FeedDocument = Feed & Document;
 
 @Schema({ timestamps: true })
 export class Feed {
+  _id: Types.ObjectId;
+
   @Prop()
   name: string;
 
