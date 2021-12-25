@@ -16,15 +16,15 @@ describe('FeedsService', () => {
   const feedsArray = [
     {
       name: 'Feed #1',
-      likes: '1'
+      likes: '1',
     },
     {
       name: 'Feed #2',
-      likes: '2'
+      likes: '2',
     },
     {
       name: 'Feed #3',
-      likes: '3'
+      likes: '3',
     },
   ];
 
@@ -64,13 +64,13 @@ describe('FeedsService', () => {
   it('should insert a new feed', async () => {
     jest.spyOn(model, 'create').mockImplementationOnce(() =>
       Promise.resolve({
-        name: 'Feed #1'
+        name: 'Feed #1',
       }),
     );
     const createFeedDto: CreateFeedDto = {
       name: 'Feed #1',
     };
-  
+
     const newFeed = await service.create(createFeedDto);
     expect(newFeed).toEqual(mockFeed);
   });

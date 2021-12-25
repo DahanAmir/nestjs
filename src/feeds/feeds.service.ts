@@ -12,14 +12,12 @@ export class FeedsService {
 
   async create(createFeedDto: CreateFeedDto): Promise<Feed> {
     const createdFeed = await this.feedModel.create(createFeedDto);
-
     return createdFeed;
   }
 
   async addLike(id: Types.ObjectId): Promise<Feed> {
     const updatedFeed = await this.feedModel.findByIdAndUpdate(id, {
       $inc: { likes: 1 },
-      
     });
 
     return updatedFeed;
@@ -31,8 +29,6 @@ export class FeedsService {
     });
     return updatedFeed;
   }
-
-
 
   async findAll(): Promise<Feed[]> {
     return this.feedModel.find().exec();
